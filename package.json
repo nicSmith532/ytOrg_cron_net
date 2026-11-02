@@ -1,0 +1,10 @@
+{
+  "name": "ytorg-cron-net",
+  "version": "1.0.0",
+  "description": "ytOrg Cron Runner in .NET 10",
+  "private": true,
+  "scripts": {
+    "start": "dotnet run",
+    "build": "dotnet build"
+  }
+}
