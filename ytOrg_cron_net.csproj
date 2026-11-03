@@ -7,7 +7,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>ytOrg_cron_net</AssemblyName>
     <RootNamespace>YtOrgCron</RootNamespace>
+    <!-- Railpack expects compiled binaries in /app/out during build step -->
+    <OutputPath Condition="'$(RAILWAY_ENVIRONMENT)' != ''">out</OutputPath>
+    <PublishDir Condition="'$(RAILWAY_ENVIRONMENT)' != ''">out</PublishDir>
   </PropertyGroup>
+
+  <Target Name="CreateOutDirectoryOnBuild" AfterTargets="Build">
+    <MakeDir Directories="out" Condition="!Exists('out')" />
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.79" />
