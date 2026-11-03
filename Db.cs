@@ -67,7 +67,11 @@ public static class Db {
     public static async Task LogCronErrorAsync(string jobName, int? userId, string message, string? detail = null) {
         try {
             var connStr = BuildConnectionString();
-            await using var conn = new NpgsqlConnection(connStr);
+            var csb = new NpgsqlConnectionStringBuilder(connStr);
+            if (csb.SslMode == SslMode.VerifyFull || csb.SslMode == SslMode.VerifyCA) {
+                csb.SslMode = SslMode.Require;
+            }
+            await using var conn = new NpgsqlConnection(csb.ConnectionString);
             await conn.OpenAsync();
             const string sql = @"
                 INSERT INTO ytl_v2.zerror_log_cron (job_name, user_id, error_message, error_detail, created_at)

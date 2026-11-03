@@ -5,7 +5,7 @@ namespace YtOrgCron;
 
 public static class Program {
     private static readonly HttpClient HttpClient = new() {
-        Timeout = TimeSpan.FromMinutes(5)
+        Timeout = TimeSpan.FromMinutes(10)
     };
 
     public static async Task<int> Main(string[] args) {
@@ -49,7 +49,7 @@ public static class Program {
                 using var request = new HttpRequestMessage(HttpMethod.Post, url);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", cronSecret);
 
-                using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+                using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(10));
                 response = await HttpClient.SendAsync(request, cts.Token);
                 text = await response.Content.ReadAsStringAsync(cts.Token);
 
